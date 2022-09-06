@@ -1,14 +1,9 @@
-// console.log("Hello, World!");
-
 function getComputerChoice(){
-    let myArray=['Rock', 'Paper','Scissors'];
-    return myArray[Math.floor(Math.random()*myArray.length)];
+    let myArray=['rock', 'paper','scissors'];
+    return myArray[Math.floor(Math.random() * myArray.length)];
 }
 
-// getComputerChoice();
-
 function playRound(playerSelection, computerSelection) {
-    // your code here!
     const str1 = playerSelection.toUpperCase();
     const str2 = computerSelection.toUpperCase();
 
@@ -36,20 +31,49 @@ function playRound(playerSelection, computerSelection) {
     else{
         return ("Enter values: 'Rock', 'Paper', 'Scissors' only");
     }
-
-    // return (`${str1} ${str2}`);
   }
-   
-// const playerSelection = prompt("Enter either Rock or Paper or Scissors", "Rock");
-// const computerSelection = getComputerChoice();
-// console.log(playRound(playerSelection, computerSelection));
 
 function game(){
-    for(let i=0; i<5; i++){
-        const playerSelection = prompt("Enter either Rock or Paper or Scissors", "Rock");
-        const computerSelection = getComputerChoice();
-        console.log(playRound(playerSelection, computerSelection));
-    }
+    const playerSelection = document.querySelectorAll('.btn');
+    const result = document.querySelector('.result');
+
+    let playerWinCount = 0;
+    let computerWinCount = 0;
+
+    playerSelection.forEach(function (btn){
+        btn.addEventListener('click', function (e){
+            const btnValue = e.currentTarget.classList;
+            const computerSelection = getComputerChoice();
+            if(btnValue.contains('rock')){
+                //console.log(playRound('rock', computerSelection));
+                result.textContent = playRound('rock', computerSelection);
+                if(computerSelection == 'paper') computerWinCount++;
+                if(computerSelection == 'scissors') playerWinCount++;
+            }
+            if(btnValue.contains('paper')){
+                // console.log(playRound('paper', computerSelection));
+                result.textContent = playRound('paper', computerSelection);
+                if(computerSelection == 'rock') playerWinCount++;
+                if(computerSelection == 'scissors') computerWinCount++;
+            }
+            if(btnValue.contains('scissors')){
+                // console.log(playRound('scissors', computerSelection));
+                result.textContent = playRound('scissors',computerSelection);
+                if(computerSelection == 'rock') computerWinCount++;
+                if(computerSelection == 'paper') playerWinCount++;
+            }
+            if(playerWinCount == 5){
+                result.textContent = `You are winner with count ${playerWinCount}`;
+                playerWinCount = 0;
+                computerWinCount = 0;
+            }
+            if(computerWinCount == 5){
+                result.textContent = `Computer is winner with count ${computerWinCount}`;
+                playerWinCount = 0;
+                computerWinCount = 0;
+            }
+        });
+    });
 }
 
 game();
